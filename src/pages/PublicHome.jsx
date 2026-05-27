@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import PublicLayout from "../layouts/PublicLayout";
 import { useUI } from "../context/UIContext";
