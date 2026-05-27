@@ -3,69 +3,100 @@ import PublicLayout from "../layouts/PublicLayout";
 import { useUI } from "../context/UIContext";
 import FadeIn from "../components/FadeIn";
 import SplitText from "../components/SplitText";
-
-const paragraphs = {
-  NO: [
-    "Explizit AS er grunnlagt og drevet av Even Torbjørnsen, sivilingeniør. Med bachelor i økonomi fra UiT, bachelor som dataingeniør ved HVL, og anvendt datateknologi fra HVL.",
-    "Født i Tromsø i 1997 og oppvokst hovedsakelig i Lofoten. Bakgrunnen kombinerer teknisk utdanning med praktisk erfaring fra ulike miljøer, inkludert Forsvaret og internasjonalt arbeid.",
-    "Den faglige bakgrunnen inkluderer bachelor i dataingeniørfag, master i anvendt datateknologi og pågående studier innen finans. Arbeidet har fokus på systemdesign, datadrevet analyse og langsiktig utvikling.",
-    "Explizit AS ble etablert i 2021 som et holdingselskap og rammeverk for strukturert utvikling, forskning og kontrollert gjennomføring av tekniske prosjekter.",
-  ],
-  EN: [
-    "Explizit AS is founded and operated by Even Torbjørnsen, an independent engineer with a background in applied computer science, finance and system-oriented analysis.",
-    "Born in Tromsø in 1997 and raised primarily in Lofoten, his background combines technical education with practical experience from diverse environments, including military service and international work.",
-    "His academic background includes a Bachelor's degree in Computer Engineering, a Master's degree in Applied Computer Science, and ongoing studies in finance. The work focuses on system design, data-driven analysis and long-term development.",
-    "Explizit AS was founded in 2021 as a holding and development company, intended to support structured experimentation, research and the controlled execution of technical projects.",
-  ],
-};
+import ContactCTA from "../components/ContactCTA";
+import { profile } from "../data/profile";
 
 export default function AboutPage() {
   const { language } = useUI();
   const isNo = language === "NO";
-  const text = paragraphs[language];
+  const lang = isNo ? "NO" : "EN";
 
   return (
     <PublicLayout>
-      <section className="space-y-12 max-w-3xl">
+      <section className="space-y-14 max-w-5xl">
         <FadeIn>
           <p className="text-xs uppercase tracking-[0.35em] text-glow/80 mb-4">
-            {isNo ? "Bakgrunn" : "Background"}
+            {isNo ? "Founder · Explizit AS" : "Founder · Explizit AS"}
           </p>
-          <h1 className="font-serif text-4xl md:text-6xl mb-8">
-            <SplitText text={isNo ? "Om Explizit" : "About Explizit"} />
+          <h1 className="font-serif text-4xl md:text-6xl mb-3 text-ui-text">
+            <SplitText text={profile.name} />
           </h1>
+          <p className="text-lg text-ui-muted">{profile.title[lang]}</p>
+          <p className="text-sm text-ui-muted mt-2">{profile.location}</p>
         </FadeIn>
 
-        <div className="space-y-8 border-l border-white/10 pl-6 md:pl-8">
-          {text.map((para, i) => (
-            <FadeIn key={i} delay={0.1 + i * 0.08}>
-              <p className="text-mist leading-relaxed text-base md:text-lg">{para}</p>
-            </FadeIn>
-          ))}
-        </div>
+        <FadeIn delay={0.15}>
+          <p className="text-ui-muted text-lg leading-relaxed max-w-3xl">
+            {profile.intro[lang]}
+          </p>
+        </FadeIn>
 
-        <FadeIn delay={0.4}>
-          <div className="pt-8 border-t border-white/8 grid sm:grid-cols-3 gap-6 text-sm">
-            <div>
-              <div className="text-xs uppercase tracking-wider text-mist/60 mb-1">
-                {isNo ? "Grunnlegger" : "Founder"}
-              </div>
-              <div className="text-white">Even Torbjørnsen</div>
-            </div>
-            <div>
-              <div className="text-xs uppercase tracking-wider text-mist/60 mb-1">
-                {isNo ? "Lokasjon" : "Location"}
-              </div>
-              <div className="text-white">Lofoten / Bergen</div>
-            </div>
-            <div>
-              <div className="text-xs uppercase tracking-wider text-mist/60 mb-1">
-                {isNo ? "Etablert" : "Established"}
-              </div>
-              <div className="text-white">2021</div>
+        <FadeIn delay={0.2}>
+          <div>
+            <h2 className="text-xs uppercase tracking-[0.3em] text-ui-muted mb-4">
+              {isNo ? "Kompetanse" : "Skills"}
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {profile.skills[lang].map((skill) => (
+                <span
+                  key={skill}
+                  className="text-sm px-3 py-1.5 rounded-full border border-ui-border text-ui-muted"
+                >
+                  {skill}
+                </span>
+              ))}
             </div>
           </div>
         </FadeIn>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          <FadeIn delay={0.25}>
+            <div className="rounded-2xl border border-ui-border bg-ui-surface p-6 space-y-4">
+              <h2 className="text-xs uppercase tracking-[0.3em] text-ui-muted">
+                {isNo ? "Utdanning" : "Education"}
+              </h2>
+              <ul className="space-y-4">
+                {profile.education[lang].map((item) => (
+                  <li key={`${item.degree}-${item.field}`} className="text-sm">
+                    <div className="font-medium text-ui-text">{item.degree}</div>
+                    <div className="text-ui-muted">{item.field}</div>
+                    <div className="text-ui-muted/80 text-xs mt-0.5">{item.school}</div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.3}>
+            <div className="rounded-2xl border border-ui-border bg-ui-surface p-6 space-y-4">
+              <h2 className="text-xs uppercase tracking-[0.3em] text-ui-muted">
+                {isNo ? "Høydepunkter" : "Highlights"}
+              </h2>
+              <ul className="space-y-3 text-sm text-ui-muted list-disc list-inside">
+                {profile.experience[lang].map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </FadeIn>
+        </div>
+
+        <div className="space-y-6">
+          <h2 className="text-xs uppercase tracking-[0.3em] text-ui-muted">
+            {isNo ? "Om meg" : "About me"}
+          </h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            {profile.about[lang].map((para, i) => (
+              <FadeIn key={i} delay={0.1 + i * 0.06}>
+                <div className="rounded-2xl border border-ui-border bg-ui-surface p-6 h-full">
+                  <p className="text-ui-muted leading-relaxed text-sm md:text-base">{para}</p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+
+        <ContactCTA language={language} />
       </section>
     </PublicLayout>
   );

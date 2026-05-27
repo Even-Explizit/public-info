@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --ui-bg: #07090d;
+  --ui-surface: #0f141b;
+  --ui-surface-soft: #141b24;
+  --ui-text: #e8edf4;
+  --ui-muted: #8b9cb3;
+  --ui-border: rgba(255, 255, 255, 0.09);
+}
+
+:root[data-theme="light"] {
+  --ui-bg: #f8fafc;
+  --ui-surface: rgba(255, 255, 255, 0.92);
+  --ui-surface-soft: #ffffff;
+  --ui-text: #0d1828;
+  --ui-muted: #4f647c;
+  --ui-border: rgba(13, 24, 40, 0.12);
+}
+
 html,
 body,
 #root {
@@ -11,14 +29,14 @@ body,
 body {
   margin: 0;
   font-family: Syne, system-ui, sans-serif;
-  background: #07090d;
-  color: #e8edf4;
+  background: var(--ui-bg);
+  color: var(--ui-text);
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
   background: rgba(94, 234, 212, 0.25);
-  color: #fff;
+  color: var(--ui-text);
 }
 
 .grain {
@@ -26,8 +44,78 @@ body {
   position: fixed;
   inset: 0;
   z-index: 50;
-  opacity: 0.035;
+  opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.ambient {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+}
+
+.ambient::before,
+.ambient::after {
+  content: "";
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(120px);
+  transition: opacity 0.3s ease;
+}
+
+.ambient::before {
+  width: 60vw;
+  height: 60vw;
+  top: -18vw;
+  left: -20vw;
+}
+
+.ambient::after {
+  width: 45vw;
+  height: 45vw;
+  right: -14vw;
+  top: 10vh;
+}
+
+.ambient.dark::before {
+  background: rgba(94, 234, 212, 0.16);
+}
+
+.ambient.dark::after {
+  background: rgba(125, 211, 252, 0.14);
+}
+
+.ambient.light::before {
+  background: rgba(45, 212, 191, 0.18);
+}
+
+.ambient.light::after {
+  background: rgba(56, 189, 248, 0.16);
+}
+
+.bg-ui-bg {
+  background-color: var(--ui-bg);
+}
+
+.bg-ui-surface {
+  background-color: var(--ui-surface);
+}
+
+.bg-ui-surface-soft {
+  background-color: var(--ui-surface-soft);
+}
+
+.text-ui-text {
+  color: var(--ui-text);
+}
+
+.text-ui-muted {
+  color: var(--ui-muted);
+}
+
+.border-ui-border {
+  border-color: var(--ui-border);
 }
 
 .link-glow {
@@ -54,7 +142,7 @@ body {
 .card-shine {
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.04) 0%,
-    rgba(255, 255, 255, 0) 50%
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0) 52%
   );
 }
