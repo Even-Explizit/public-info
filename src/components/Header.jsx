@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useUI } from "../context/UIContext";
+import Logo from "./Logo";
 
 const links = [
   { to: "/", no: "Hjem", en: "Home" },
@@ -22,34 +23,8 @@ export default function Header() {
       className="sticky top-0 z-40 border-b border-ui-border bg-ui-surface/80 backdrop-blur-xl"
     >
       <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between gap-6">
-        <Link to="/" className="flex items-center gap-3 group text-ui-text">
-          <svg
-            viewBox="0 0 200 100"
-            className="h-10 w-auto transition-transform group-hover:scale-[1.02]"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-label="Explizit"
-          >
-            <defs>
-              <linearGradient id="arrowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#5eead4" />
-                <stop offset="100%" stopColor="#7dd3fc" />
-              </linearGradient>
-            </defs>
-            <line x1="20" y1="40" x2="180" y2="40" stroke="url(#arrowGradient)" strokeWidth="5" />
-            <polygon points="20,40 35,33 28,40" fill="#5eead4" />
-            <polygon points="180,40 165,33 172,40" fill="#7dd3fc" />
-            <text
-              x="100"
-              y="72"
-              fontFamily="Instrument Serif, Georgia, serif"
-              fontSize="22"
-              fontStyle="italic"
-              textAnchor="middle"
-              fill="currentColor"
-            >
-              Explizit
-            </text>
-          </svg>
+        <Link to="/" className="flex items-center group text-ui-text">
+          <Logo className="h-11 w-auto transition-transform duration-300 group-hover:scale-[1.02]" />
         </Link>
 
         <nav className="flex items-center gap-6 md:gap-8 text-sm text-ui-muted">
