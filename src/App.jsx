@@ -8,7 +8,7 @@ import AboutPage from './pages/AboutPage'
 export default function App() {
   return (
     <UIProvider>
-      <Router basename={process.env.PUBLIC_URL || '/'}>
+      <Router>
         <Routes>
           <Route path="/" element={<PublicHome />} />
           <Route path="/projects" element={<ProjectsPage />} />

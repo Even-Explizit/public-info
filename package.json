@@ -2,11 +2,12 @@
   "name": "explizit-public-presentation",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://explizit.no",
+  "homepage": ".",
   "description": "Offentlig presentasjonsside for explizit.no — hjem, prosjekter, om (NO/EN)",
   "dependencies": {
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "framer-motion": "^11.18.2",
     "react-router-dom": "^6.30.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^5.2.0"

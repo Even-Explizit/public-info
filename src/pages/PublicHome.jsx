@@ -1,61 +1,96 @@
-import React from 'react'
-import PublicLayout from '../layouts/PublicLayout'
-import { useUI } from '../context/UIContext'
+import React from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import PublicLayout from "../layouts/PublicLayout";
+import { useUI } from "../context/UIContext";
+import FadeIn from "../components/FadeIn";
+import SplitText from "../components/SplitText";
+import { NavCard } from "../components/ProjectCard";
 
 export default function PublicHome() {
-  const { language } = useUI()
+  const { language } = useUI();
+  const isNo = language === "NO";
 
   return (
     <PublicLayout>
-      <section className="space-y-10 max-w-3xl">
-        {/* HERO */}
-        <div className="space-y-4">
-          <h1 className="text-4xl font-bold tracking-tight">
-            explizit.no
+      <section className="space-y-16 md:space-y-24">
+        <div className="space-y-8 max-w-4xl">
+          <FadeIn>
+            <p className="text-xs uppercase tracking-[0.35em] text-glow/80 font-medium">
+              {isNo ? "Forskning · Systemer · Analyse" : "Research · Systems · Analysis"}
+            </p>
+          </FadeIn>
+
+          <h1 className="font-serif text-5xl md:text-7xl leading-[1.05] tracking-tight">
+            <SplitText
+              text={isNo ? "Uavhengig teknisk utvikling" : "Independent technical craft"}
+            />
           </h1>
 
-          <p className="text-lg text-gray-400">
-            {language === 'NO'
-              ? 'Uavhengig forskning, systemutvikling og datadrevet analyse med fokus på finansielle markeder og komplekse systemer.'
-              : 'Independent research, system development and data-driven analysis focused on financial markets and complex systems.'}
-          </p>
+          <FadeIn delay={0.35}>
+            <p className="text-lg md:text-xl text-mist max-w-2xl leading-relaxed">
+              {isNo
+                ? "Datadrevet analyse, systemdesign og langsiktig forskning — med fokus på finansielle markeder og komplekse systemer."
+                : "Data-driven analysis, system design and long-horizon research — focused on financial markets and complex systems."}
+            </p>
+          </FadeIn>
 
-          <p className="text-sm text-gray-500">
-            {language === 'NO'
-              ? 'Utvalgte prosjekter er private og tilgjengelige kun via invitasjon.'
-              : 'Selected projects are private and available by invitation only.'}
-          </p>
+          <FadeIn delay={0.5}>
+            <motion.div
+              className="inline-flex items-center gap-3 text-sm text-mist/80 border border-white/8 rounded-full px-4 py-2"
+              animate={{ opacity: [0.7, 1, 0.7] }}
+              transition={{ duration: 4, repeat: Infinity }}
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-glow" />
+              {isNo
+                ? "Utvalgte prosjekter er private — kun via invitasjon"
+                : "Selected projects are private — by invitation only"}
+            </motion.div>
+          </FadeIn>
         </div>
 
-        {/* COMPANY */}
-        <div className="pt-8 border-t border-gray-800 space-y-4">
-          <h2 className="text-xl font-semibold text-gray-200">
-            Explizit AS
-          </h2>
-
-          <p className="text-gray-400">
-            {language === 'NO'
-              ? 'Explizit AS er et norsk holdingselskap etablert for å støtte langsiktig teknisk, analytisk og forskningsbasert utvikling. Selskapet fungerer som et strukturert rammeverk for selvstendig utvikling og eksperimentering.'
-              : 'Explizit AS is a Norwegian holding and development company founded to support long-term technical, analytical and research-oriented projects. The company serves as a structured framework for independent development and experimentation.'}
-          </p>
-
-          <div className="text-sm text-gray-500 space-y-1">
-            <div>
-              {language === 'NO'
-                ? 'Organisasjonsnummer: 927 609 924'
-                : 'Organisation number: 927 609 924'}
-            </div>
-            <div>
-              {language === 'NO' ? 'Etablert: 2021' : 'Established: 2021'}
-            </div>
-            <div>
-              {language === 'NO'
-                ? 'Adresse: Hovdanveien 56, 8387 Fredvang'
-                : 'Address: Hovdanveien 56, 8387 Fredvang'}
-            </div>
+        <FadeIn delay={0.2}>
+          <div className="grid md:grid-cols-2 gap-4 max-w-3xl">
+            <NavCard
+              to="/projects"
+              label={isNo ? "Prosjekter" : "Projects"}
+              desc={isNo ? "Aura Drone, finansanalyse m.m." : "Aura Drone, financial analysis & more"}
+              delay={0}
+            />
+            <NavCard
+              to="/about"
+              label={isNo ? "Om Explizit" : "About Explizit"}
+              desc={isNo ? "Selskap, bakgrunn, kontekst" : "Company, background, context"}
+              delay={0.08}
+            />
           </div>
-        </div>
+        </FadeIn>
+
+        <FadeIn delay={0.15}>
+          <div className="pt-8 border-t border-white/8 grid md:grid-cols-[1fr_auto] gap-8 items-end">
+            <div className="space-y-4">
+              <h2 className="font-serif text-3xl italic text-white/95">Explizit AS</h2>
+              <p className="text-mist max-w-xl leading-relaxed">
+                {isNo
+                  ? "Norsk holdingselskap etablert 2021 — et strukturert rammeverk for teknisk utvikling, analyse og kontrollert eksperimentering."
+                  : "Norwegian holding company founded 2021 — a structured framework for technical development, analysis and controlled experimentation."}
+              </p>
+            </div>
+            <dl className="text-sm text-mist/90 space-y-2 font-mono">
+              <div>
+                <dt className="text-xs uppercase tracking-wider text-mist/60">Org.nr</dt>
+                <dd>927 609 924</dd>
+              </div>
+              <div>
+                <dt className="text-xs uppercase tracking-wider text-mist/60">
+                  {isNo ? "Adresse" : "Address"}
+                </dt>
+                <dd>Hovdanveien 56, 8387 Fredvang</dd>
+              </div>
+            </dl>
+          </div>
+        </FadeIn>
       </section>
     </PublicLayout>
-  )
+  );
 }

@@ -3,11 +3,10 @@ import React, { createContext, useContext, useState } from 'react'
 const UIContext = createContext()
 
 export function UIProvider({ children }) {
-  const [language, setLanguage] = useState('NO')
-  const [theme, setTheme] = useState('dark')
+  const [language, setLanguage] = useState("NO");
 
   return (
-    <UIContext.Provider value={{ language, setLanguage, theme, setTheme }}>
+    <UIContext.Provider value={{ language, setLanguage }}>
       {children}
     </UIContext.Provider>
   )

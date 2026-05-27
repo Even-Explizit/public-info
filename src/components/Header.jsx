@@ -1,70 +1,82 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { useUI } from '../context/UIContext'
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
+import { useUI } from "../context/UIContext";
+
+const links = [
+  { to: "/", no: "Hjem", en: "Home" },
+  { to: "/projects", no: "Prosjekter", en: "Projects" },
+  { to: "/about", no: "Om", en: "About" },
+];
 
 export default function Header() {
-  const { language, setLanguage, theme, setTheme } = useUI()
+  const { language, setLanguage } = useUI();
+  const location = useLocation();
+  const isNo = language === "NO";
 
   return (
-    <header className="w-full border-b border-gray-800 bg-[#0B0F14]">
-      <div className="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
-        
-        {/* LOGO */}
-        <Link to="/" className="flex items-center">
+    <motion.header
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="sticky top-0 z-40 border-b border-white/6 bg-ink/70 backdrop-blur-xl"
+    >
+      <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between gap-6">
+        <Link to="/" className="flex items-center gap-3 group">
           <svg
             viewBox="0 0 200 100"
-            className="h-12 w-auto"
+            className="h-10 w-auto transition-transform group-hover:scale-[1.02]"
             xmlns="http://www.w3.org/2000/svg"
+            aria-label="Explizit"
           >
-            {/* Arrow gradient */}
             <defs>
               <linearGradient id="arrowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#3B82F6" />
-                <stop offset="100%" stopColor="#A855F7" />
+                <stop offset="0%" stopColor="#5eead4" />
+                <stop offset="100%" stopColor="#7dd3fc" />
               </linearGradient>
             </defs>
-            {/* Arrow line */}
-            <line x1="20" y1="40" x2="180" y2="40" stroke="url(#arrowGradient)" strokeWidth="6" />
-            {/* Arrow head left */}
-            <polygon points="20,40 35,33 28,40" fill="#3B82F6" />
-            {/* Arrow head right */}
-            <polygon points="180,40 165,33 172,40" fill="#A855F7" />
-            {/* Text */}
-            <text x="100" y="70" fontFamily="serif" fontSize="20" fontStyle="italic" textAnchor="middle" fill="white">
+            <line x1="20" y1="40" x2="180" y2="40" stroke="url(#arrowGradient)" strokeWidth="5" />
+            <polygon points="20,40 35,33 28,40" fill="#5eead4" />
+            <polygon points="180,40 165,33 172,40" fill="#7dd3fc" />
+            <text
+              x="100"
+              y="72"
+              fontFamily="Instrument Serif, Georgia, serif"
+              fontSize="22"
+              fontStyle="italic"
+              textAnchor="middle"
+              fill="white"
+            >
               Explizit
             </text>
           </svg>
         </Link>
 
-        {/* NAV + CONTROLS */}
-        <nav className="flex items-center gap-8 text-sm text-gray-400">
-          <Link to="/" className="hover:text-white transition">
-            {language === 'NO' ? 'Hjem' : 'Home'}
-          </Link>
-          <Link to="/projects" className="hover:text-white transition">
-            {language === 'NO' ? 'Prosjekter' : 'Projects'}
-          </Link>
-          <Link to="/about" className="hover:text-white transition">
-            {language === 'NO' ? 'Om' : 'About'}
-          </Link>
+        <nav className="flex items-center gap-6 md:gap-8 text-sm text-mist">
+          {links.map(({ to, no, en }) => {
+            const active = location.pathname === to;
+            return (
+              <Link
+                key={to}
+                to={to}
+                className={`link-glow transition-colors ${
+                  active ? "text-glow" : "hover:text-white"
+                }`}
+              >
+                {isNo ? no : en}
+              </Link>
+            );
+          })}
 
-          {/* LANGUAGE */}
           <button
-            onClick={() => setLanguage(language === 'NO' ? 'EN' : 'NO')}
-            className="ml-6 px-2 py-1 text-xs border border-gray-700 rounded hover:border-gray-500 transition"
+            type="button"
+            onClick={() => setLanguage(isNo ? "EN" : "NO")}
+            className="ml-2 px-3 py-1 text-xs border border-white/12 rounded-full hover:border-glow/40 hover:text-glow transition-colors"
           >
             {language}
           </button>
-
-          {/* THEME */}
-          <button
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="px-2 py-1 text-xs border border-gray-700 rounded hover:border-gray-500 transition"
-          >
-            {theme === 'dark' ? '☾' : '☀︎'}
-          </button>
         </nav>
       </div>
-    </header>
-  )
+    </motion.header>
+  );
 }
