@@ -23,6 +23,14 @@ export default function AboutPage() {
           </h1>
           <p className="text-lg text-ui-muted">{profile.title[lang]}</p>
           <p className="text-sm text-ui-muted mt-2">{profile.location}</p>
+          <a
+            href={profile.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 mt-4 text-sm text-glow link-glow"
+          >
+            {isNo ? "LinkedIn-profil →" : "LinkedIn profile →"}
+          </a>
         </FadeIn>
 
         <FadeIn delay={0.15}>
@@ -95,6 +103,32 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
+
+        <FadeIn delay={0.35}>
+          <div className="rounded-2xl border border-ui-border bg-ui-surface p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div className="space-y-2">
+              <p className="text-xs uppercase tracking-[0.3em] text-ui-muted">
+                LinkedIn
+              </p>
+              <h2 className="font-serif text-2xl md:text-3xl text-ui-text">
+                {isNo ? "Utvidet profil" : "Extended profile"}
+              </h2>
+              <p className="text-ui-muted max-w-md">
+                {isNo
+                  ? "Se full bakgrunn, erfaring og utdanning på min private LinkedIn-profil."
+                  : "See my full background, experience and education on my personal LinkedIn profile."}
+              </p>
+            </div>
+            <a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center px-6 py-3 rounded-full border border-ui-border text-ui-text hover:border-glow/40 hover:text-glow transition-colors whitespace-nowrap"
+            >
+              linkedin.com/in/eventorb →
+            </a>
+          </div>
+        </FadeIn>
 
         <ContactCTA language={language} />
       </section>

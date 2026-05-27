@@ -8,6 +8,7 @@ export const profile = {
   company: "Explizit AS",
   orgNr: "927 609 924",
   email: "even@explizit.no",
+  linkedin: "https://www.linkedin.com/in/eventorb",
 
   intro: {
     NO: "Nyutdannet kandidat med tverrfaglig bakgrunn i økonomi og datateknologi. Jeg trives i skjæringspunktet mellom data, økonomi, digitalisering og problemløsning — og tar oppdrag innen analyse, data og teknologiske løsninger.",
