@@ -5,6 +5,19 @@ import FadeIn from "../components/FadeIn";
 import SplitText from "../components/SplitText";
 import ContactCTA from "../components/ContactCTA";
 import { profile } from "../data/profile";
+import { getAge } from "../utils/age";
+
+function renderAboutParagraph(text) {
+  if (!text.includes("{{age}}")) return text;
+
+  const parts = text.split("{{age}}");
+  return parts.map((part, i) => (
+    <React.Fragment key={i}>
+      {part}
+      {i < parts.length - 1 && <span>{getAge(profile.birthDate)}</span>}
+    </React.Fragment>
+  ));
+}
 
 export default function AboutPage() {
   const { language } = useUI();
@@ -78,10 +91,10 @@ export default function AboutPage() {
           <FadeIn delay={0.3}>
             <div className="rounded-2xl border border-ui-border bg-ui-surface p-6 space-y-4">
               <h2 className="text-xs uppercase tracking-[0.3em] text-ui-muted">
-                {isNo ? "Høydepunkter" : "Highlights"}
+                {isNo ? "Interesser" : "Interests"}
               </h2>
               <ul className="space-y-3 text-sm text-ui-muted list-disc list-inside">
-                {profile.experience[lang].map((item) => (
+                {profile.interests[lang].map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>
@@ -89,20 +102,20 @@ export default function AboutPage() {
           </FadeIn>
         </div>
 
-        <div className="space-y-6">
-          <h2 className="text-xs uppercase tracking-[0.3em] text-ui-muted">
-            {isNo ? "Om meg" : "About me"}
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {profile.about[lang].map((para, i) => (
-              <FadeIn key={i} delay={0.1 + i * 0.06}>
-                <div className="rounded-2xl border border-ui-border bg-ui-surface p-6 h-full">
-                  <p className="text-ui-muted leading-relaxed text-sm md:text-base">{para}</p>
-                </div>
-              </FadeIn>
-            ))}
+        <FadeIn delay={0.32}>
+          <div className="rounded-2xl border border-ui-border bg-ui-surface p-6 md:p-8 space-y-4">
+            <h2 className="text-xs uppercase tracking-[0.3em] text-ui-muted">
+              {isNo ? "Om meg" : "About me"}
+            </h2>
+            <div className="space-y-4">
+              {profile.about[lang].map((para, i) => (
+                <p key={i} className="text-ui-muted leading-relaxed text-sm md:text-base">
+                  {renderAboutParagraph(para)}
+                </p>
+              ))}
+            </div>
           </div>
-        </div>
+        </FadeIn>
 
         <FadeIn delay={0.35}>
           <div className="rounded-2xl border border-ui-border bg-ui-surface p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">

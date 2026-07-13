@@ -58,7 +58,7 @@ export default function PublicHome() {
                 <li>{isNo ? "Maskinlæring (fra data til modell)" : "Machine learning (from data to model)"}</li>
               </ul>
               <div className="pt-2 flex flex-wrap gap-2">
-                {profile.skills[lang].slice(0, 4).map((skill) => (
+                {profile.skills[lang].slice(0, 8).map((skill) => (
                   <span
                     key={skill}
                     className="text-xs px-2.5 py-1 rounded-full border border-ui-border text-ui-muted"
@@ -89,13 +89,13 @@ export default function PublicHome() {
             <NavCard
               to="/projects"
               label={isNo ? "Prosjekter" : "Projects"}
-              desc={isNo ? "Master, Kvante, Aura Drone m.m." : "Master, Kvante, Aura Drone & more"}
+              desc={isNo ? "Aura Drone, Master, Power BI m.m." : "Aura Drone, Master, Power BI & more"}
               delay={0}
             />
             <NavCard
               to="/about"
               label={isNo ? "Om meg" : "About me"}
-              desc={isNo ? "Utdanning, erfaring, bakgrunn" : "Education, experience, background"}
+              desc={isNo ? "Utdanning, interesser, bakgrunn" : "Education, interests, background"}
               delay={0.08}
             />
           </div>

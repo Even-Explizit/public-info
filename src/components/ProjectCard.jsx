@@ -8,6 +8,7 @@ export default function ProjectCard({
   meta = [],
   href,
   hrefLabel,
+  pending = false,
   delay = 0,
 }) {
   return (
@@ -42,7 +43,7 @@ export default function ProjectCard({
             ))}
           </div>
         )}
-        {href && (
+        {href && !pending && (
           <a
             href={href}
             target="_blank"
@@ -51,6 +52,9 @@ export default function ProjectCard({
           >
             {hrefLabel} →
           </a>
+        )}
+        {pending && (
+          <p className="text-sm text-ui-muted/80 pt-2 italic">{hrefLabel}</p>
         )}
       </div>
     </motion.article>

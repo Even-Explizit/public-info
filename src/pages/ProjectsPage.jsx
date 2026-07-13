@@ -4,57 +4,12 @@ import { useUI } from "../context/UIContext";
 import FadeIn from "../components/FadeIn";
 import SplitText from "../components/SplitText";
 import ProjectCard from "../components/ProjectCard";
+import { getProjects, githubProfiles } from "../data/projects";
 
 export default function ProjectsPage() {
   const { language } = useUI();
   const isNo = language === "NO";
-
-  const projects = [
-    {
-      title: "Master",
-      subtitle: isNo ? "Maskinlaering · Vindkraft" : "Machine learning · Wind power",
-      description: isNo
-        ? "Masterprosjekt for modellering og prognoser av vindturbiners effektproduksjon med LSTM og XGBoost, strukturert i stegvis pipeline."
-        : "Master project focused on wind turbine power forecasting with LSTM and XGBoost, organized in a staged pipeline.",
-      meta: isNo
-        ? ["Python", "LSTM", "XGBoost", "Data pipeline"]
-        : ["Python", "LSTM", "XGBoost", "Data pipeline"],
-      href: "https://github.com/Even-Explizit/Master",
-      hrefLabel: "GitHub / Master",
-    },
-    {
-      title: "Kvante",
-      subtitle: isNo ? "Qiskit · Docker · Laeringsprosjekt" : "Qiskit · Docker · Learning project",
-      description: isNo
-        ? "Lokalt laeringsprosjekt i kvanteprogrammering med progresjon fra enkel qubit til entanglement og IBM Quantum-integrasjon."
-        : "Local quantum programming learning project progressing from single-qubit basics to entanglement and IBM Quantum integration.",
-      meta: isNo
-        ? ["Python", "Qiskit", "Docker", "IBM Quantum"]
-        : ["Python", "Qiskit", "Docker", "IBM Quantum"],
-      href: "https://github.com/Even-Explizit/Kvante",
-      hrefLabel: "GitHub / Kvante",
-    },
-    {
-      title: "Aura Drone",
-      subtitle: isNo ? "Lysdroneshow · Norden" : "Light drone shows · Nordics",
-      description: isNo
-        ? "Aura er et nordisk droneselskap som leverer lysdroneshow. Prosjektet kombinerer luftfart, distribuerte systemer og visuell koreografi for synkroniserte luftshow."
-        : "Aura is a Nordic drone company specialising in large-scale light drone shows - combining aviation, distributed systems and visual choreography.",
-      meta: isNo ? ["Aura AS", "Ørsta", "2023"] : ["Aura AS", "Ørsta", "2023"],
-      href: "https://www.auradrone.no/",
-      hrefLabel: "auradrone.no",
-    },
-    {
-      title: isNo ? "Datadrevet selskapsanalyse" : "Data-driven corporate analysis",
-      subtitle: isNo ? "Internt utviklingsprosjekt" : "Internal development",
-      description: isNo
-        ? "Selvstendig system for innhenting, strukturering og analyse av finansielle selskapsdata - med automatisert kvalitetssikring og sanntids helsekontroll."
-        : "Independent system for collecting, structuring and analysing financial corporate data - with automated validation and real-time health monitoring.",
-      meta: isNo
-        ? ["Finans", "Multi-kilde", "Privat"]
-        : ["Finance", "Multi-source", "Private"],
-    },
-  ];
+  const projects = getProjects(isNo);
 
   return (
     <PublicLayout>
@@ -66,13 +21,70 @@ export default function ProjectsPage() {
           <h1 className="font-serif text-4xl md:text-6xl text-ui-text">
             <SplitText text={isNo ? "Prosjekter" : "Projects"} />
           </h1>
+          <p className="text-ui-muted text-lg leading-relaxed max-w-3xl mt-6">
+            {isNo
+              ? "Utvalgte prosjekter og utviklingsarbeid — rettet mot samarbeid og konsulentoppdrag, ikke jobbsøking."
+              : "Selected projects and development work — focused on collaboration and consulting, not job applications."}
+          </p>
+        </FadeIn>
+
+        <FadeIn delay={0.1}>
+          <div className="rounded-2xl border border-glow/20 bg-ui-surface p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div className="space-y-2">
+              <p className="text-xs uppercase tracking-[0.3em] text-glow/80">
+                GitHub
+              </p>
+              <h2 className="font-serif text-2xl text-ui-text">
+                {isNo ? "Åpne kodeprosjekter" : "Open code projects"}
+              </h2>
+              <p className="text-ui-muted max-w-xl text-sm md:text-base">
+                {isNo
+                  ? "På min nye GitHub-profil ligger prosjektene jeg jobber med nå — kodede og åpne. Jeg har også egne private prosjekter som ikke vises offentlig."
+                  : "My current GitHub profile hosts the projects I'm working on now — coded and public. I also maintain private projects that aren't shown here."}
+              </p>
+            </div>
+            <a
+              href={githubProfiles.current.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center px-6 py-3 rounded-full border border-glow/40 text-glow hover:bg-glow/10 transition-colors whitespace-nowrap"
+            >
+              {githubProfiles.current.label} →
+            </a>
+          </div>
         </FadeIn>
 
         <div className="grid gap-6 md:gap-8">
           {projects.map((project, i) => (
-            <ProjectCard key={project.title} {...project} delay={i * 0.12} />
+            <ProjectCard key={project.title} {...project} delay={0.15 + i * 0.1} />
           ))}
         </div>
+
+        <FadeIn delay={0.7}>
+          <div className="rounded-2xl border border-ui-border bg-ui-surface p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div className="space-y-2">
+              <p className="text-xs uppercase tracking-[0.3em] text-ui-muted">
+                {isNo ? "Gammel profil" : "Legacy profile"}
+              </p>
+              <h2 className="font-serif text-2xl text-ui-text">
+                {isNo ? "Fra skoletiden" : "From my student days"}
+              </h2>
+              <p className="text-ui-muted max-w-xl text-sm md:text-base">
+                {isNo
+                  ? "Min eldre GitHub-profil inneholder gamle prosjekter og annet fra studietiden — før den nye profilen rettet mot det jeg holder på med nå."
+                  : "My older GitHub profile holds legacy projects and other work from my student days — before the new profile focused on what I'm building now."}
+              </p>
+            </div>
+            <a
+              href={githubProfiles.legacy.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center px-6 py-3 rounded-full border border-ui-border text-ui-text hover:border-glow/40 hover:text-glow transition-colors whitespace-nowrap"
+            >
+              {githubProfiles.legacy.label} →
+            </a>
+          </div>
+        </FadeIn>
       </section>
     </PublicLayout>
   );
